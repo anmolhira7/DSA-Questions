@@ -1,0 +1,22 @@
+  boolean search(Node root, int key) {
+        //base case
+        if (root == null) return false;
+
+        if (root.data == key) return true;
+
+        return search(root.left, key) || search(root.right, key);
+    }
+
+    int count = 0;
+
+   //main method
+    void countPair(Node root, Node node, int tar) {
+        if (node == null) return;
+
+        int compl = tar - root.data;
+
+        if (search(root, compl)) count++;
+
+        countPair(root, node.left, tar);
+        countPair(root, node.right, tar);
+    }
