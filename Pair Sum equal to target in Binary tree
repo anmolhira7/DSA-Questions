@@ -1,3 +1,4 @@
+  //Bruteforce approach
   boolean search(Node root, int key) {
         //base case
         if (root == null) return false;
@@ -20,3 +21,23 @@
         countPair(root, node.left, tar);
         countPair(root, node.right, tar);
     }
+    
+    
+ //optimized
+ int count = 0;
+ HashSet<Integer> set = new HashSet<>();
+
+    void countPairByHash(Node root, int target) {
+        if (root != null) {
+            if (set.contains(target - root.data))
+                count += 1;
+            else
+                set.add(root.data);
+
+            countPairByHash(root.left, target);
+            countPairByHash(root.right, target);
+        }
+        //if root == null do nothing
+    }
+    
+    T(c) = o(n) s(c) = o(n);
