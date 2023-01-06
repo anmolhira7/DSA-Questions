@@ -1,0 +1,30 @@
+  public int[][] floodFill(int[][] image, int sr, int sc, int newcolor) {
+        int oldcolor = image[sr][sc];
+        //here if newcolor is same as old color no need to change
+        if(newcolor == oldcolor)return image;
+        
+        // dfs(image, sr,sc, newcolor, oldcolor);
+        
+        Queue<Pair<Integer,Integer>> q = new LinkedList<>();
+        q.offer(new Pair(sr,sc));
+        image[sr][sc] = newcolor;
+        
+        
+        
+        while(!q.isEmpty()){
+            Pair<Integer,Integer> cur = q.poll();
+            int dx[] = {1,0,-1,0};
+            int dy[] = {0,1,0,-1};
+            
+            for(int i=0; i<4; i++){
+                int x = cur.getKey() + dx[i];
+                int y = cur.getValue()+ dy[i];
+                
+         if(x >= 0 && x < image.length && y >=0 && y < image[0].length && image[x][y] ==oldcolor){
+                image[x][y] = newcolor;
+                q.offer(new Pair<Integer,Integer>(x,y));
+            }
+        }
+    }
+        return image;
+  }
