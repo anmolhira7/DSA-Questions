@@ -1,0 +1,67 @@
+class Solution {
+    
+    void dfs(int[][]image, int sr, int sc, int newcolor, int color){
+        //base condition if sr, sc go out of bounds
+        if(sr < 0 || sr > image.length-1){
+            return;
+        }
+        if(sc < 0 || sc > image[0].length-1){
+            return;
+        }
+        
+        //do work only if matrix cell values is equal to given value that need to be changed
+        if(image[sr][sc] == color){
+            //first set new color for current row and column
+          image[sr][sc] = newcolor;
+            
+             dfs(image, sr-1,sc, newcolor, color);
+             dfs(image, sr,sc+1, newcolor, color);
+             dfs(image, sr+1,sc, newcolor, color);
+             dfs(image, sr,sc-1, newcolor, color);
+            
+        }
+    }
+    
+    public int[][] floodFill(int[][] image, int sr, int sc, int newcolor) {
+        int oldcolor = image[sr][sc];
+        //here if newcolor is same as old color no need to change
+        if(newcolor == oldcolor)return image;
+        
+        // dfs(image, sr,sc, newcolor, oldcolor);
+        
+        Queue<Pair<Integer,Integer>> q = new LinkedList<>();
+        q.offer(new Pair(sr,sc));
+        image[sr][sc] = newcolor;
+        
+        
+        
+        while(!q.isEmpty()){
+            Pair<Integer,Integer> cur = q.poll();
+            int x = cur.getKey()-1;
+            int y = cur.getValue();
+            if(x >= 0 && x < image.length && y >=0 && y < image[0].length && image[x][y] == oldcolor){
+                image[x][y] = newcolor;
+                q.offer(new Pair<Integer,Integer>(x,y));
+            }
+            x = cur.getKey();
+            y = cur.getValue()+1;
+            if(x >= 0 && x < image.length && y >=0 && y < image[0].length && image[x][y] == oldcolor){
+                image[x][y] = newcolor;
+                q.offer(new Pair<Integer,Integer>(x,y));
+            }
+            x = cur.getKey()+1;
+            y = cur.getValue();
+            if(x >= 0 && x < image.length && y >=0 && y < image[0].length && image[x][y] == oldcolor){
+                image[x][y] = newcolor;
+                q.offer(new Pair<Integer,Integer>(x,y));
+            }
+            x = cur.getKey();
+            y = cur.getValue()-1;
+            if(x >= 0 && x < image.length && y >=0 && y < image[0].length && image[x][y] == oldcolor){
+                image[x][y] = newcolor;
+                q.offer(new Pair<Integer,Integer>(x,y));
+            }
+        }
+        return image;
+    }
+}
